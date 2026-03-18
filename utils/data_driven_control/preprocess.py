@@ -1,6 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def subspace_ID(H_U, H_Y, k):
+    """Obtain k-dim subspace basis matrix """
+    # Perform SVD on the output Hankel matrix
+    H_W = np.stack((H_U, H_Y), axis=0)  # Stack H_U and H_Y vertically
+    U, _, _ = np.linalg.svd(H_W, full_matrices=False)
+
+    # Take the first k columns of U as the subspace basis
+    subspace_basis = U[:, :k]
+
+    return subspace_basis
+
 def check_gpe(H_U, H_Y, plot):
     """Check the Generalized Persistence of Excitation (GPE) condition."""
     # Compute the rank of the Hankel matrices
