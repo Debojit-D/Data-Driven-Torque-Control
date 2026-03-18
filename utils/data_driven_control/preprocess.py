@@ -1,16 +1,26 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-def check_gpe(H_U):
+def check_gpe(H_U, H_Y, plot):
     """Check the Generalized Persistence of Excitation (GPE) condition."""
     # Compute the rank of the Hankel matrices
     rank_H_U = np.linalg.matrix_rank(H_U)
+    rank_H_Y = np.linalg.matrix_rank(H_Y)
 
     # Check if the rank is full
     mL = H_U.shape[0]  # number of rows in H_U
 
     gpe_satisfied = (rank_H_U == mL)
+
+    if(plot):
+        plt.figure(figsize=(12, 5))
+        plt.title("Singular Values of H_Y")
+        plt.loglog(np.linalg.svd(H_Y, compute_uv=False), marker='o')
+        plt.tight_layout()
+        plt.show()
+
     
-    return gpe_satisfied, rank_H_U
+    return gpe_satisfied, rank_H_U, rank_H_Y
 
 def hankel(U, Y, L):
     """Construct Hankel matrices from input and output data."""

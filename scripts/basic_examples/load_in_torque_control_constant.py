@@ -7,6 +7,7 @@ import numpy as np
 from utils.data_driven_control.preprocess import hankel, check_gpe
 
 XML_FILE_PATH = "robot_descriptions/franka_emika_panda/scene.xml"
+PLOT = True
 
 # Constant user torques for the 7 Panda arm joints
 tau_user = np.array([
@@ -86,6 +87,7 @@ print("Output data shape (Y):", Y.shape)
 print("Checking persistence of excitation...")
 
 H_U, H_Y = hankel(U, Y, L)
-gpe_satisfied, rank_H_U = check_gpe(H_U)
+gpe_satisfied, rank_H_U, rank_H_Y = check_gpe(H_U, H_Y, plot=PLOT)
 print("GPE satisfied:", gpe_satisfied)
 print("Rank of Hankel matrix for inputs (H_U):", rank_H_U)
+print("Rank of Hankel matrix for outputs (H_Y):", rank_H_Y)
