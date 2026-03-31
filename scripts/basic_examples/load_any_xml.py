@@ -12,7 +12,7 @@ import numpy as np
 from mujoco.viewer import launch
 
 # Path to your MuJoCo XML model (MJCF or converted URDF file)
-URDF_FILE_PATH = "/home/iitgn-robotics/Debojit_WS/Data-Driven-Torque-Control/robot_descriptions/franka_emika_panda/scene.xml"
+URDF_FILE_PATH = "../../robot_descriptions/franka_emika_panda/scene.xml"
 
 # Load the MuJoCo model from the specified XML path
 model = mujoco.MjModel.from_xml_path(URDF_FILE_PATH)

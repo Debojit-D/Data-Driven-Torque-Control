@@ -3,7 +3,7 @@
 import mujoco
 import mujoco.viewer
 
-XML_FILE_PATH = "/home/iitgn-robotics/Debojit_WS/Data-Driven-Torque-Control/robot_descriptions/franka_emika_panda/scene.xml"
+XML_FILE_PATH = "../../robot_descriptions/franka_emika_panda/scene.xml"
 
 
 def compensate_gravity(model, data):
