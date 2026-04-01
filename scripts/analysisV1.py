@@ -12,7 +12,7 @@ PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from utils.data_driven_control.preprocess import check_gpe, hankel
+from utils.data_driven_control.preprocess import check_gpe, describe_hankel_gpe, hankel
 
 XML_FILE_PATH = "/home/iitgn-robotics/Debojit_WS/Data-Driven-Torque-Control/robot_descriptions/franka_emika_panda/scene.xml"
 
@@ -427,6 +427,7 @@ def main():
         "gpe_satisfied": None,
         "rank_H_U": None,
         "rank_H_Y": None,
+        "hankel_diagnostics": None,
         "message": "GPE check disabled.",
     }
 
@@ -436,15 +437,20 @@ def main():
         num_samples = U.shape[1]
 
         if L > num_samples:
-            message = f"Skipping GPE check: Hankel depth L={L} exceeds number of samples N={num_samples}."
-            print(message)
-            gpe_result["message"] = message
+            hankel_diagnostics = describe_hankel_gpe(U, Y, L)
+            for line in hankel_diagnostics["lines"]:
+                print(line)
+            gpe_result["message"] = hankel_diagnostics["summary"]
+            gpe_result["hankel_diagnostics"] = hankel_diagnostics
         else:
             H_U, H_Y = hankel(U, Y, L)
             gpe_satisfied, rank_H_U, rank_H_Y = check_gpe(H_U, H_Y, plot=False)
+            hankel_diagnostics = describe_hankel_gpe(
+                U, Y, L, H_U=H_U, H_Y=H_Y, rank_H_U=rank_H_U, rank_H_Y=rank_H_Y, gpe_satisfied=gpe_satisfied
+            )
+            for line in hankel_diagnostics["lines"]:
+                print(line)
             print("GPE satisfied:", gpe_satisfied)
-            print("Rank of Hankel matrix for inputs (H_U):", rank_H_U)
-            print("Rank of Hankel matrix for outputs (H_Y):", rank_H_Y)
             gpe_result = {
                 "checked": True,
                 "hankel_depth": int(L),
@@ -452,7 +458,8 @@ def main():
                 "gpe_satisfied": bool(gpe_satisfied),
                 "rank_H_U": int(rank_H_U),
                 "rank_H_Y": int(rank_H_Y),
-                "message": "GPE check completed.",
+                "hankel_diagnostics": hankel_diagnostics,
+                "message": hankel_diagnostics["summary"],
             }
 
             if PLOT_GPE:

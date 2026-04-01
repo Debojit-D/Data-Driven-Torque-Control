@@ -1,0 +1,138 @@
+{
+  "script": "analysisV2.py",
+  "output_dir": "/home/iitgn-robotics/Debojit_WS/Data-Driven-Torque-Control/plots/analysisV2_20260401_173148",
+  "xml_file_path": "/home/iitgn-robotics/Debojit_WS/Data-Driven-Torque-Control/robot_descriptions/franka_emika_panda/scene.xml",
+  "settings": {
+    "excitation_duration": 40.0,
+    "ramp_time": 3.0,
+    "multisine_amplitude_deg": [
+      8.0,
+      8.0,
+      6.0,
+      6.0,
+      4.0,
+      4.0,
+      4.0
+    ],
+    "multisine_frequencies_hz": [
+      0.17,
+      0.23,
+      0.31,
+      0.41,
+      0.53,
+      0.67,
+      0.83
+    ],
+    "multisine_phase_deg": [
+      0.0,
+      35.0,
+      80.0,
+      125.0,
+      170.0,
+      215.0,
+      260.0
+    ],
+    "joint_center_offset_deg": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "use_velocity_in_output": false,
+    "kp": [
+      20.0,
+      20.0,
+      20.0,
+      15.0,
+      10.0,
+      8.0,
+      5.0
+    ],
+    "kd": [
+      2.0,
+      2.0,
+      2.0,
+      1.5,
+      1.0,
+      0.8,
+      0.5
+    ],
+    "tau_limits": [
+      87.0,
+      87.0,
+      87.0,
+      87.0,
+      12.0,
+      12.0,
+      12.0
+    ],
+    "run_gpe_check": true,
+    "gpe_hankel_depth": 200,
+    "save_data": true
+  },
+  "results": {
+    "num_samples": 20000,
+    "U_shape": [
+      7,
+      20000
+    ],
+    "Y_shape": [
+      7,
+      20000
+    ],
+    "home_configuration_deg": [
+      0.0,
+      0.0,
+      0.0,
+      -89.99963750135457,
+      0.0,
+      89.99963750135457,
+      -44.99437565162355
+    ],
+    "gpe": {
+      "checked": true,
+      "hankel_depth": 200,
+      "plot_saved": true,
+      "gpe_satisfied": false,
+      "rank_H_U": 450,
+      "rank_H_Y": 150,
+      "hankel_diagnostics": {
+        "num_inputs": 7,
+        "num_outputs": 7,
+        "num_samples": 20000,
+        "hankel_depth": 200,
+        "num_hankel_columns": 19801,
+        "expected_H_U_shape": [
+          1400,
+          19801
+        ],
+        "expected_H_Y_shape": [
+          1400,
+          19801
+        ],
+        "required_rank_H_U": 1400,
+        "max_possible_rank_H_U": 1400,
+        "dimensionally_possible": true,
+        "summary": "Failure after construction: rank(H_U)=450 is below mL=1400 by 950. The Hankel matrix was built, but the input data does not span enough independent directions for this depth.",
+        "lines": [
+          "Hankel diagnostics:",
+          "  Inputs m = 7, outputs p = 7, samples N = 20000, depth L = 200",
+          "  Hankel columns K = N - L + 1 = 19801",
+          "  Expected H_U shape = (1400, 19801) = (mL, K)",
+          "  Expected H_Y shape = (1400, 19801) = (pL, K)",
+          "  GPE target: rank(H_U) must equal mL = 1400",
+          "  Best possible rank from dimensions: min(mL, K) = 1400",
+          "  Failure after construction: rank(H_U)=450 is below mL=1400 by 950. The Hankel matrix was built, but the input data does not span enough independent directions for this depth.",
+          "  Actual H_U shape = (1400, 19801)",
+          "  Actual H_Y shape = (1400, 19801)",
+          "  Observed rank(H_U) = 450",
+          "  Observed rank(H_Y) = 150"
+        ]
+      },
+      "message": "Failure after construction: rank(H_U)=450 is below mL=1400 by 950. The Hankel matrix was built, but the input data does not span enough independent directions for this depth."
+    }
+  }
+}
